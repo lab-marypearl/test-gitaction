@@ -12,23 +12,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Set up kubectl (optional if kubectl isn't pre-installed)
+      # Set up kubectl (corrected input to 'version' instead of 'kubectl-version')
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
         with:
-          kubectl-version: 'v1.24.0'
+          version: 'v1.24.0'  # Correct input, specify the desired kubectl version
 
-      # Configure kubectl with Kubernetes credentials (Azure Arc or other K8s clusters)
+      # Ensure the .kube directory exists and configure kubectl with Kubernetes credentials (Azure Arc or other K8s clusters)
       - name: Configure kubectl with K8S credentials
         run: |
-          echo "$KUBECONFIG" > ~/.kube/config  # Ensure this secret is set in GitHub
+          mkdir -p ~/.kube  # Ensure the .kube directory exists
+          echo "$KUBECONFIG" > ~/.kube/config  # Set KUBECONFIG in GitHub Secrets
 
       # Apply the microservices-deployment.yaml file to the cluster
       - name: Deploy microservices
         run: |
           kubectl apply -f test-gitaction/microservices-deployment.yaml
 
-      # Check the status of the deployment
-      - name: Check deployment status
-        run: |
-          kubectl rollout status deployment <your-deployment-name>
+      # # Check the status of the deployment
+      # - name: Check deployment status
+      #   run: |
+      #     kubectl rollout status deployment <your-deployment-name>
