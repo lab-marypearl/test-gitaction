@@ -1,0 +1,17 @@
+ name: Mary CI Hello World
+
+ on:
+   push:
+     branches:
+       - main
+
+ jobs:
+   build:
+     runs-on: lab-marypearl-arc-runners-set
+
+     steps:
+       - name: Get Your Code
+         uses: actions/checkout@v2
+
+       - name: Say Hello to the World
+         run: echo "Hello, World!"
