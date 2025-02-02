@@ -33,6 +33,10 @@ jobs:
           # kubectl apply -f test-gitaction/microservices-deployment.yaml
           kubectl apply -f microservices-deployment.yaml
 
+      - name: Port-forward the service
+        run: |
+          kubectl port-forward svc/frontend-external 8080:80 -n lab-marypearl-arc-runners
+
       # # Check the status of the deployment
       # - name: Check deployment status
       #   run: |
