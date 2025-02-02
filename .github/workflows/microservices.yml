@@ -1,11 +1,7 @@
 name: Deploy Microservices
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'test-gitaction/microservices-deployment.yaml'
+  workflow_dispatch:  # Trigger the workflow manually via the GitHub UI
 
 jobs:
   deploy:
@@ -32,7 +28,7 @@ jobs:
         run: |
           kubectl apply -f test-gitaction/microservices-deployment.yaml
 
-      # # Check the status of the deployment
-      # - name: Check deployment status
-      #   run: |
-      #     kubectl rollout status deployment <your-deployment-name>
+      # Check the status of the deployment
+      - name: Check deployment status
+        run: |
+          kubectl rollout status deployment <your-deployment-name>
