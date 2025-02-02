@@ -1,0 +1,47 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # Cluster-wide role
+  name: deployment-manager
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "create", "update", "delete"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: deployment-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: lab-marypearl-arc-runners-set-gha-rs-no-permission
+    namespace: lab-marypearl-arc-runners
+roleRef:
+  kind: ClusterRole
+  name: deployment-manager  # The ClusterRole you created
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: serviceaccount-manager  # Cluster-wide role name for managing serviceaccounts
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "create", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: serviceaccount-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: lab-marypearl-arc-runners-set-gha-rs-no-permission  # The service account used by GitHub Actions
+    namespace: lab-marypearl-arc-runners
+roleRef:
+  kind: ClusterRole
+  name: serviceaccount-manager  # The ClusterRole you created above
+  apiGroup: rbac.authorization.k8s.io
