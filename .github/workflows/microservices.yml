@@ -27,7 +27,9 @@ jobs:
       # Apply the microservices-deployment.yaml file to the cluster
       - name: Deploy microservices
         run: |
-          kubectl apply -f test-gitaction/microservices-deployment.yaml
+          pwd
+          ls -ltr
+          # kubectl apply -f test-gitaction/microservices-deployment.yaml
 
       # # Check the status of the deployment
       # - name: Check deployment status
