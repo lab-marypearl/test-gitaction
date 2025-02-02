@@ -9,28 +9,28 @@ on:
 
 jobs:
   deploy:
-    runs-on: lab-marypearl-arc-runners-set
+    runs-on: lab-marypearl-arc-runners-set  # Self-hosted GitHub runner name
 
     steps:
       # Checkout the repository to get access to your files
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # # Set up Kubernetes environment with kubectl
-      # - name: Set up kubectl
-      #   uses: azure/setup-kubectl@v3
-      #   with:
-      #     kubectl-version: 'v1.24.0'  # You can set the version based on your Kubernetes version
+      # Set up kubectl (optional if kubectl isn't pre-installed)
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          kubectl-version: 'v1.24.0'
 
-      # # Configure Kubernetes credentials
-      # - name: Configure kubectl with K8S credentials
-      #   run: |
-      #     echo "$KUBECONFIG" > ~/.kube/config  # Set KUBECONFIG in GitHub Secrets
+      # Configure kubectl with Kubernetes credentials (Azure Arc or other K8s clusters)
+      - name: Configure kubectl with K8S credentials
+        run: |
+          echo "$KUBECONFIG" > ~/.kube/config  # Ensure this secret is set in GitHub
 
       # Apply the microservices-deployment.yaml file to the cluster
       - name: Deploy microservices
         run: |
-          kubectl apply -f microservices-deployment.yaml
+          kubectl apply -f test-gitaction/microservices-deployment.yaml
 
       # # Check the status of the deployment
       # - name: Check deployment status
