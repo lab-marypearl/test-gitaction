@@ -33,9 +33,10 @@ jobs:
           # kubectl apply -f clusterole-clusterrolebinding.yaml
           kubectl apply -f microservices-deployment.yaml
 
-      - name: Port-forward the service
-        run: |
-          kubectl port-forward svc/frontend-external 8080:80 -n lab-marypearl-arc-runners
+      # - name: Port-forward the service
+      #   run: |
+      #   To run this port-forwarding command from local.
+      #     kubectl port-forward svc/frontend-external 8080:80 -n lab-marypearl-arc-runners
 
       # # Check the status of the deployment
       # - name: Check deployment status
