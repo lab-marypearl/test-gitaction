@@ -45,3 +45,30 @@ roleRef:
   kind: ClusterRole
   name: serviceaccount-manager  # The ClusterRole you created above
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: lab-marypearl-arc-runners
+  name: port-forward-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "get"]
+  - apiGroups: [""]
+    resources: ["pods/portforward"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: port-forward-rolebinding
+  namespace: lab-marypearl-arc-runners
+subjects:
+  - kind: ServiceAccount
+    name: lab-marypearl-arc-runners-set-gha-rs-no-permission
+    namespace: lab-marypearl-arc-runners
+roleRef:
+  kind: Role
+  name: port-forward-role
+  apiGroup: rbac.authorization.k8s.io
