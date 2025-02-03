@@ -30,7 +30,7 @@ jobs:
           pwd
           ls -ltr
           # cd /home/runner/_work/test-gitaction/test-gitaction
-          # kubectl apply -f test-gitaction/microservices-deployment.yaml
+          # kubectl apply -f clusterole-clusterrolebinding.yaml
           kubectl apply -f microservices-deployment.yaml
 
       - name: Port-forward the service
